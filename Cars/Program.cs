@@ -11,7 +11,27 @@ namespace Cars
     {
         static void Main(string[] args)
         {
-           
-        }        
+            var cars = ProcessFile("fuel.csv");
+
+            var query =
+                from car in cars
+                orderby car.Combined ascending, car.Name ascending
+                select car;
+
+            foreach (var car in query.Take(10))
+            {
+                Console.WriteLine($"{car.Name} : {car.Combined}" );
+            }
+
+        }
+
+        private static List<Car> ProcessFile(string path)
+        {
+            return
+                (from line in File.ReadAllLines(path).Skip(1)
+                 where line.Length > 1
+                 select Car.ParseFromCsv(line)).ToList();
+        }
+
     }
 }

@@ -15,7 +15,8 @@ namespace Cars
 
             var query =
                 from car in cars
-                orderby car.Combined ascending, car.Name ascending
+                where car.Manufacturer =="BMW" && car.Year ==2016
+                orderby car.Combined descending, car.Name ascending
                 select car;
 
             foreach (var car in query.Take(10))
